@@ -427,8 +427,3 @@ The summary endpoint (`GET /api/metrics/summary`) aggregates these into `{count,
 - **Health UI**: `/health` — colour-coded status with auto-refresh every 15 s.
 - **API playground**: `/api-demo` — interactive buttons that fire each endpoint and pretty-print the JSON response.
 
----
-
-## License
-
-MIT — see [LICENSE](LICENSE) (or omit if your project is not redistributable).
