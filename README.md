@@ -30,81 +30,33 @@ front-end that consumes every endpoint live.
 - **Composer 2.x**
 - **Docker + Docker Compose** (optional but recommended — a full MySQL + Nginx + PHP stack is included)
 
-### Option A — Docker (recommended)
 
 ```bash
-# 1. Clone the repository
+# 1. Clone project
 git clone https://github.com/NikaPepo/dev_presentation.git
-cd developer_presentation
+cd dev_presentation
 
-# 2. Create your .env from the template
+# 2. Environment setup
 cp .env.example .env
+# configure .env manually (DB, Mail, OpenAI)
 
-# 3. Edit .env — at minimum set:
-#      MAIL_OWNER_ADDRESS=you@example.com   (where contact-form submissions go)
-#      OPENAI_API_KEY=sk-...                (optional — without it AI returns 502)
-#    Then generate the app key:
-docker compose run --rm app php artisan key:generate
+# 3. Start Docker stack
+docker compose up -d --build
 
-# 4. Boot the stack (PHP-FPM + Nginx + MySQL)
-docker compose up -d
-
-# 5. Install backend (PHP) dependencies
+# 4. Install PHP dependencies
 docker compose exec app composer install
+
+# 5. Generate application key
+docker compose exec app php artisan key:generate
 
 # 6. Run database migrations
 docker compose exec app php artisan migrate --force
 
-# 7. Install frontend (JS) dependencies
-docker compose exec app npm install --include=optional
+# 7. Install frontend dependencies (if applicable)
+docker compose exec node npm install
 
-# 8. Build frontend assets (Vite + Tailwind + Alpine.js)
-docker compose exec app npm run build
-
-# 9. Open the site
-open http://localhost:8080
-```
-
-### Option B — bare PHP
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/NikaPepo/dev_presentation.git
-cd developer_presentation
-
-# 2. Create your .env from the template and generate an app key
-cp .env.example .env
-php artisan key:generate
-
-# 3. Edit .env — at minimum set MAIL_OWNER_ADDRESS and (optionally) OPENAI_API_KEY
-
-# 4. Install backend (PHP) dependencies
-composer install
-
-# 5. Install frontend (JS) dependencies
-npm install --include=optional
-
-# 6. Database — defaults to SQLite (no setup), or set DB_* in .env for MySQL
-php artisan migrate
-
-# 7. Build frontend assets (Vite + Tailwind + Alpine.js)
-npm run build
-
-# 8. Run the server
-php artisan serve
-```
-
-### Development workflow (hot reload)
-
-```bash
-# Terminal 1: PHP server
-php artisan serve
-
-# Terminal 2: Vite dev server with HMR
-npm run dev
-
-# Terminal 3: Tail logs (optional)
-php artisan pail
+# 8. Build frontend assets
+docker compose exec node npm run build
 ```
 
 ---
