@@ -15,8 +15,8 @@ use Throwable;
 class MailService
 {
     /**
-     * Send both the owner notification and the user auto-reply.
-     * Returns a list of human-readable warnings (empty when everything is fine).
+     * Send the owner notification and the user auto-reply.
+     * Returns a list of human-readable warnings (empty when both succeed).
      *
      * @return string[]
      */
@@ -25,7 +25,11 @@ class MailService
         $warnings = [];
 
         if (! $this->sendOwner($contact)) {
-            $warnings[] = 'Email notifications could not be sent';
+            $warnings[] = 'Site owner could not be notified';
+        }
+
+        if (! $this->sendUserConfirmation($contact)) {
+            $warnings[] = 'Confirmation email could not be sent to the submitter';
         }
 
         return $warnings;
@@ -55,8 +59,12 @@ class MailService
         }
     }
 
-    public function sendUserConfirmation(Contact $contact): bool
+    private function sendUserConfirmation(Contact $contact): bool
     {
+        if ($contact->email === '') {
+            return false;
+        }
+
         try {
             Mail::to($contact->email)->send(new UserContactMail($contact));
             return true;

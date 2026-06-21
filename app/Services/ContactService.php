@@ -70,7 +70,6 @@ class ContactService
         // 4) Metric — best-effort
         try {
             $this->metrics->recordContact(
-                $contact->category,
                 $analysis !== null ? (microtime(true) - $aiStart) * 1000 : null,
             );
         } catch (Throwable $e) {

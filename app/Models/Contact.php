@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\ContactCategory;
 use Database\Factories\ContactFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email
  * @property string $phone
  * @property string $message
- * @property ContactCategory $category
  * @property string|null $ai_sentiment
  * @property string|null $ai_summary
  * @property float|null $ai_confidence
@@ -34,7 +32,6 @@ class Contact extends Model
         'email',
         'phone',
         'message',
-        'category',
         'ai_sentiment',
         'ai_summary',
         'ai_confidence',
@@ -45,7 +42,6 @@ class Contact extends Model
     protected function casts(): array
     {
         return [
-            'category' => ContactCategory::class,
             'ai_confidence' => 'float',
         ];
     }

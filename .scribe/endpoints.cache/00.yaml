@@ -78,29 +78,11 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      category:
-        custom: []
-        name: category
-        description: 'One of: general, support, sales, feedback, bug_report, other.'
-        required: true
-        example: sales
-        type: string
-        enumValues:
-          - general
-          - support
-          - sales
-          - feedback
-          - bug_report
-          - other
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
     cleanBodyParameters:
       name: b
       email: zbailey@example.net
       phone: i
       message: 'y'
-      category: sales
     fileParameters: []
     responses:
       -

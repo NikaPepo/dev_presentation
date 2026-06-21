@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Enums\ContactCategory;
 use App\Repositories\Contracts\MetricRepositoryInterface;
 
 class MetricsService
 {
     public function __construct(private readonly MetricRepositoryInterface $metrics) {}
 
-    public function recordContact(ContactCategory $category, ?float $aiDurationMs = null): void
+    public function recordContact(?float $aiDurationMs = null): void
     {
-        $this->metrics->increment('contacts.total', 1.0, ['category' => $category->value]);
+        $this->metrics->increment('contacts.total', 1.0);
 
         if ($aiDurationMs !== null) {
-            $this->metrics->gauge('contacts.ai_duration_ms', $aiDurationMs, ['category' => $category->value]);
+            $this->metrics->gauge('contacts.ai_duration_ms', $aiDurationMs);
         }
     }
 

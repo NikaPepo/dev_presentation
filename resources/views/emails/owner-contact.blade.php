@@ -4,7 +4,6 @@
 **From:** {{ $contact->name }}
 **Email:** {{ $contact->email }}
 **Phone:** {{ $contact->phone }}
-**Category:** {{ $contact->category->label() }}
 
 @if($contact->ai_sentiment)
 **Sentiment:** {{ ucfirst($contact->ai_sentiment) }}

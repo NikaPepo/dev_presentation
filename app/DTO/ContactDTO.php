@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DTO;
 
-use App\Enums\ContactCategory;
 use App\Http\Requests\ContactRequest;
 
 /**
@@ -18,7 +17,6 @@ final readonly class ContactDTO
         public string $email,
         public string $phone,
         public string $message,
-        public ContactCategory $category,
         public ?string $ip = null,
         public ?string $userAgent = null,
     ) {}
@@ -30,7 +28,6 @@ final readonly class ContactDTO
             email: trim($request->string('email')->toString()),
             phone: trim($request->string('phone')->toString()),
             message: trim($request->string('message')->toString()),
-            category: ContactCategory::from($request->string('category')->toString()),
             ip: $request->ip(),
             userAgent: $request->userAgent(),
         );

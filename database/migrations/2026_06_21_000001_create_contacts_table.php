@@ -14,7 +14,6 @@ return new class extends Migration
             $table->string('email')->index();
             $table->string('phone', 30);
             $table->text('message');
-            $table->string('category', 32)->index();
             $table->string('ai_sentiment', 32)->nullable();
             $table->text('ai_summary')->nullable();
             $table->decimal('ai_confidence', 3, 2)->nullable();

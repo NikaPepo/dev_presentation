@@ -1,5 +1,5 @@
 <div x-data="{
-        form: { name: '', email: '', phone: '', message: '', category: 'general' },
+        form: { name: '', email: '', phone: '', message: '' },
         errors: {},
         loading: false,
         success: null,
@@ -21,7 +21,7 @@
                     this.errors = { _general: [data.message || ('HTTP ' + r.status)] };
                 } else {
                     this.success = data;
-                    this.form = { name: '', email: '', phone: '', message: '', category: 'general' };
+                    this.form = { name: '', email: '', phone: '', message: '' };
                     this.warnings = data.warnings || [];
                 }
             } catch (e) {
@@ -34,8 +34,7 @@
 
     <x-section-heading
         eyebrow="Contact"
-        title="Drop me a line"
-        description="Form posts to the real <code class='font-mono text-indigo-300'>POST /api/contact</code>. You'll get a 201 with an AI-analyzed summary inline." />
+        title="Drop me a line" />
 
     <div class="grid lg:grid-cols-5 gap-6">
         <form @submit.prevent="submit()" class="lg:col-span-3 space-y-4">
@@ -47,20 +46,6 @@
             </div>
             <x-form-field name="phone" label="Phone" required placeholder="+7 495 999 99 99"
                           x-bind:value="form.phone" @input="form.phone = $event.target.value" />
-
-            <div>
-                <label class="block text-sm font-medium text-slate-200 mb-1.5">Category <span class="text-rose-400">*</span></label>
-                <div class="flex flex-wrap gap-2">
-                    @foreach(\App\Enums\ContactCategory::cases() as $cat)
-                        <label class="cursor-pointer">
-                            <input type="radio" name="category" value="{{ $cat->value }}" x-model="form.category" class="peer sr-only">
-                            <span class="inline-block px-3 py-1.5 text-sm rounded-lg border border-white/10 bg-slate-900/40 text-slate-300 peer-checked:bg-indigo-500/20 peer-checked:border-indigo-500/50 peer-checked:text-indigo-200 transition">
-                                {{ $cat->label() }}
-                            </span>
-                        </label>
-                    @endforeach
-                </div>
-            </div>
 
             <x-form-field name="message" label="Message" type="textarea" required
                           placeholder="What's on your mind?"

@@ -18,7 +18,6 @@ class ContactRepository implements ContactRepositoryInterface
             'email' => $dto->email,
             'phone' => $dto->phone,
             'message' => $dto->message,
-            'category' => $dto->category->value,
             'ip' => $dto->ip,
             'user_agent' => $dto->userAgent,
         ]);

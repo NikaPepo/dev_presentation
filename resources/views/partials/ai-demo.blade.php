@@ -35,7 +35,7 @@
         <div class="rounded-xl border border-white/10 bg-slate-900/40 p-5">
             <label for="ai-input" class="block text-sm font-medium text-slate-200 mb-2">Your message</label>
             <textarea id="ai-input" x-model="message" rows="6"
-                      placeholder="e.g. I've been waiting for a refund for three weeks now. This is unacceptable."
+                      placeholder="Type your message here..."
                       class="w-full rounded-lg bg-slate-950/70 border border-white/10 px-3 py-2 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none transition"></textarea>
 
             <div class="mt-3 flex items-center justify-between gap-3">

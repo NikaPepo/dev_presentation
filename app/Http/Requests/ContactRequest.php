@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use App\Enums\ContactCategory;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class ContactRequest extends FormRequest
 {
@@ -18,7 +16,7 @@ class ContactRequest extends FormRequest
     /**
      * Validation rules for the contact-form payload.
      *
-     * @return array<string, array<int, string|\Illuminate\Validation\Rules\In>>
+     * @return array<string, array<int, string>>
      */
     public function rules(): array
     {
@@ -34,23 +32,11 @@ class ContactRequest extends FormRequest
 
             /** @example "I'd like to ask about enterprise pricing for the Pro plan." */
             'message' => ['required', 'string', 'min:10', 'max:5000'],
-
-            /** @example "sales" */
-            'category' => ['required', 'string', Rule::in(array_column(ContactCategory::cases(), 'value'))],
-        ];
-    }
-
-    /** @return array<string, string> */
-    public function messages(): array
-    {
-        return [
-            'category.in' => 'Category must be one of: '.implode(', ', array_column(ContactCategory::cases(), 'value')),
         ];
     }
 
     /**
      * Body parameters metadata for Scribe API documentation.
-     * Each entry: ['type' => ..., 'description' => ..., 'required' => bool].
      *
      * @return array<string, array{type:string,description:string,required:bool}>
      */
@@ -75,11 +61,6 @@ class ContactRequest extends FormRequest
             'message' => [
                 'type' => 'string',
                 'description' => 'Free-form message text (10–5000 characters).',
-                'required' => true,
-            ],
-            'category' => [
-                'type' => 'string',
-                'description' => 'One of: '.implode(', ', array_column(ContactCategory::cases(), 'value')),
                 'required' => true,
             ],
         ];

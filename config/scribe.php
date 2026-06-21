@@ -16,22 +16,9 @@ return [
     // A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
     'description' => 'Contact-form API with AI-assisted message analysis (OpenAI), email notifications, rate limiting, metrics and health checks.',
 
-    // Text to place in the "Introduction" section, right after the `description`. Markdown and HTML are supported.
-    'intro_text' => <<<'INTRO'
-            Public REST API for the contact form.
-
-            All endpoints are JSON-only (`Accept: application/json`). Responses are auto-rendered as JSON for any `api/*` route thanks to `shouldRenderJsonWhen(fn ($req) => $req->is('api/*'))` in `bootstrap/app.php`.
-
-            ### Error handling matrix
-
-            | Status | When |
-            |---|---|
-            | **201 Created** | Contact submitted successfully. `aiSummary` may be `null` (graceful fallback if OpenAI is unavailable). `warnings[]` may contain messages about email delivery. |
-            | **422 Unprocessable Entity** | Validation failed — see the `errors` object. |
-            | **429 Too Many Requests** | Per-IP rate limit exceeded (`throttle:contact`, default 5/min). Includes `Retry-After` header. |
-            | **500 Internal Server Error** | Database or unexpected server failure. |
-            | **503 Service Unavailable** | `/api/health` only — the database is unreachable. |
-        INTRO,
+    // Text in the "Introduction" section. Edit .scribe/intro.md instead — that file
+    // is rendered as Markdown and wins over this fallback.
+    'intro_text' => '',
 
     // The base URL displayed in the docs.
     // If you're using `laravel` type, you can set this to a dynamic string, like '{{ config("app.tenant_url") }}' to get a dynamic base URL.

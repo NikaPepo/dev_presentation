@@ -105,23 +105,44 @@
     <div class="dark-box"></div>
     <div class="content">
         <h1 id="introduction">Introduction</h1>
+<p><a href="/"><svg style="vertical-align: -3px;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to portfolio</a></p>
 <p>Contact-form API with AI-assisted message analysis (OpenAI), email notifications, rate limiting, metrics and health checks.</p>
 <aside>
     <strong>Base URL</strong>: <code>http://localhost</code>
 </aside>
-<pre><code>Public REST API for the contact form.
-
-All endpoints are JSON-only (`Accept: application/json`). Responses are auto-rendered as JSON for any `api/*` route thanks to `shouldRenderJsonWhen(fn ($req) =&gt; $req-&gt;is('api/*'))` in `bootstrap/app.php`.
-
-### Error handling matrix
-
-| Status | When |
-|---|---|
-| **201 Created** | Contact submitted successfully. `aiSummary` may be `null` (graceful fallback if OpenAI is unavailable). `warnings[]` may contain messages about email delivery. |
-| **422 Unprocessable Entity** | Validation failed — see the `errors` object. |
-| **429 Too Many Requests** | Per-IP rate limit exceeded (`throttle:contact`, default 5/min). Includes `Retry-After` header. |
-| **500 Internal Server Error** | Database or unexpected server failure. |
-| **503 Service Unavailable** | `/api/health` only — the database is unreachable. |</code></pre>
+<p>Public REST API for the contact form.</p>
+<p>All endpoints are JSON-only (<code>Accept: application/json</code>). Responses are auto-rendered as JSON for any <code>api/*</code> route thanks to <code>shouldRenderJsonWhen(fn ($req) =&gt; $req-&gt;is('api/*'))</code> in <code>bootstrap/app.php</code>.</p>
+<h3 id="error-handling-matrix">Error handling matrix</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>201 Created</strong></td>
+<td>Contact submitted successfully. <code>aiSummary</code> may be <code>null</code> (graceful fallback if OpenAI is unavailable). <code>warnings[]</code> may contain messages about email delivery.</td>
+</tr>
+<tr>
+<td><strong>422 Unprocessable Entity</strong></td>
+<td>Validation failed — see the <code>errors</code> object.</td>
+</tr>
+<tr>
+<td><strong>429 Too Many Requests</strong></td>
+<td>Per-IP rate limit exceeded (<code>throttle:contact</code>, default 5/min). Includes <code>Retry-After</code> header.</td>
+</tr>
+<tr>
+<td><strong>500 Internal Server Error</strong></td>
+<td>Database or unexpected server failure.</td>
+</tr>
+<tr>
+<td><strong>503 Service Unavailable</strong></td>
+<td><code>/api/health</code> only — the database is unreachable.</td>
+</tr>
+</tbody>
+</table>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>This API is not authenticated.</p>
@@ -155,8 +176,7 @@ failures are non-fatal and surfaced in <code>warnings[]</code>.</p>
     \"name\": \"b\",
     \"email\": \"zbailey@example.net\",
     \"phone\": \"i\",
-    \"message\": \"y\",
-    \"category\": \"sales\"
+    \"message\": \"y\"
 }"
 </code></pre></div>
 
@@ -175,8 +195,7 @@ let body = {
     "name": "b",
     "email": "zbailey@example.net",
     "phone": "i",
-    "message": "y",
-    "category": "sales"
+    "message": "y"
 };
 
 fetch(url, {
@@ -321,20 +340,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Free-form message text (10–5000 characters). Must be at least 10 characters. Must not be greater than 5000 characters. Example: <code>y</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="category"                data-endpoint="POSTapi-contact"
-               value="sales"
-               data-component="body">
-    <br>
-<p>One of: general, support, sales, feedback, bug_report, other. Example: <code>sales</code></p>
-Must be one of:
-<ul style="list-style-type: square;"><li><code>general</code></li> <li><code>support</code></li> <li><code>sales</code></li> <li><code>feedback</code></li> <li><code>bug_report</code></li> <li><code>other</code></li></ul>
         </div>
         </form>
 
